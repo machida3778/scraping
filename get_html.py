@@ -41,6 +41,9 @@ def Get(patentNum: str):
 
     for i, num in enumerate(str.split(patentNum, " ")):
 
+        if not num:
+            continue
+
         # 経過情報ボタンを押下する
         IgnoreException(lambda: \
             driver \

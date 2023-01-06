@@ -8,7 +8,7 @@ if __name__ == "__main__":
     patentNum = ""
     with open("./csv/input.csv", encoding="utf-8", newline="") as f:
         for i in csv.reader(f):
-            patentNum += " ".join(i)
+            patentNum += " ".join(i) + " "
 
     # 対象のhtmlファイルをスクレイピング
     get_html.Get(patentNum)
