@@ -37,8 +37,6 @@ def Get(patentNum: str):
         .find_element(By.ID, "p00_searchBtn_btnDocInquiry") \
         .click()
 
-    sleep(0.5) # 読み込みに伴い、0.5秒スリープする
-
     for i, num in enumerate(str.split(patentNum, " ")):
 
         if not num:
