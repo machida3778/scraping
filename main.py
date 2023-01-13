@@ -5,13 +5,20 @@ import csv
 if __name__ == "__main__":
     
     # input.csvファイルの読み込み
-    patentNum = ""
+    patentNum = []
     with open("./csv/input.csv", encoding="utf-8", newline="") as f:
         for i in csv.reader(f):
-            patentNum += " ".join(i) + " "
+            patentNum += i
 
     # 対象のhtmlファイルをスクレイピング
-    get_html.Get(patentNum)
+    step = 100
+    for i in range(0, len(patentNum), step):
+        last_idx = i + step
+        if len(patentNum) <= last_idx:
+            last_idx = len(patentNum)
+        
+        str_num = " ".join(patentNum[i:last_idx])
+        get_html.Get(str_num)
 
     # htmlファイルをcsvファイルに変換して保存する
     headers = [ "出願記事",
