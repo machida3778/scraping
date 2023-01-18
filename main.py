@@ -6,7 +6,7 @@ import csv
 if __name__ == "__main__":
     
     # input.csvファイルの読み込み
-    max_input = 5
+    max_input = None
     patentNum = load_input.load(max_input)
 
     # 対象のhtmlファイルをスクレイピング
@@ -17,7 +17,7 @@ if __name__ == "__main__":
             last_idx = len(patentNum)
         
         str_num = " ".join(patentNum[i:last_idx])
-        #get_html.Get(str_num)
+        get_html.Get(str_num)
 
     # htmlファイルをcsvファイルに変換して保存する
     headers = [ "出願記事",
