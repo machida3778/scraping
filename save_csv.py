@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import glob
 import pandas as pd
+import load_input
 
 def Save(headers: list):
 
@@ -8,6 +9,11 @@ def Save(headers: list):
     df = pd.DataFrame(columns=headers)
 
     path = glob.glob("./html/*.html")
+    patentNum = load_input.load()
+
+    a, b = len("./html\\page-"), len(".html")
+    path = sorted(path, key=lambda x: patentNum.index(x[a:-b]))
+
     for p in path:
 
         name = p.replace(".html", "").replace("./html\\", "")  
@@ -18,7 +24,7 @@ def Save(headers: list):
         # \u2002 is a space
         data = [[i.replace("\u2002", "") for i in j.text.split("\n") if i] for j in tr]
         data = list(filter(lambda x: x[0] in headers, data))
-        data = [[name] + [i[1] for i in data]]
+        data = [[name] + ["".join(i[1:]) for i in data]]
         data = pd.DataFrame(data, columns=headers)
         df = pd.concat([df, data])
 
