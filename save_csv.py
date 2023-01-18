@@ -12,6 +12,7 @@ def Save(headers: list):
     patentNum = load_input.load()
 
     a, b = len("./html\\page-"), len(".html")
+    path = filter(lambda x: x[a:-b] in patentNum, path)
     path = sorted(path, key=lambda x: patentNum.index(x[a:-b]))
 
     for p in path:
@@ -22,11 +23,15 @@ def Save(headers: list):
         tr = soup.find_all("tr")
 
         # \u2002 is a space
-        data = [[i.replace("\u2002", "") for i in j.text.split("\n") if i] for j in tr]
-        data = list(filter(lambda x: x[0] in headers, data))
-        data = [[name] + ["".join(i[1:]) for i in data]]
-        data = pd.DataFrame(data, columns=headers)
-        df = pd.concat([df, data])
+        try:
+            data = [[i.replace("\u2002", "") for i in j.text.split("\n") if i] for j in tr]
+            data = list(filter(lambda x: x[0] in headers, data))
+            data = [[name] + ["".join(i[1:]) for i in data]]
+            data = pd.DataFrame(data, columns=headers)
+            df = pd.concat([df, data])
+        except ValueError as e:
+            print(e)
+            print(f"{p}に必要な情報が含まれていない可能性があります。処理は続行されます")
 
     msgFlg = True
     while True:
